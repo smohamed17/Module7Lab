@@ -1,0 +1,78 @@
+-- Module 7 Lab by Said 
+-- Getting SELECT query data from the shippers table
+
+SELECT * FROM Shippers;
+ShipperID    CompanyName         Phone
+---------  ----------------  --------------
+        1  Speedy Express    (503) 555-9831
+        2  United Package    (503) 555-3199
+        3  Federal Shipping  (503) 555-9931
+
+-- Adding more queries to the database. Sorting rows. 
+SELECT ContactName, Country, Phone FROM Customers
+ORDER BY Country, ContactName LIMIT 5;
+  ContactName      Country      Phone
+----------------  ---------  ------------
+Patricio Simpson  Argentina  (1) 135-5555
+Sergio Gutiérrez  Argentina  (1) 123-5555
+Yvonne Moncada    Argentina  (1) 135-5333
+Georg Pipps       Austria    6562-9722
+Roland Mendel     Austria    7675-3425
+
+-- Filtering rows using the WHERE clause. 
+SELECT CustomerID, OrderDate, ShipCity FROM Orders
+WHERE CustomerID = 'ALFKI';
+CustomerID  OrderDate   ShipCity
+----------  ----------  --------
+ALFKI       1997-08-25  Berlin
+ALFKI       1997-10-03  Berlin
+ALFKI       1997-10-13  Berlin
+ALFKI       1998-01-15  Berlin
+ALFKI       1998-03-16  Berlin
+ALFKI       1998-04-09  Berlin
+
+-- Collecting or retrieving data from two different tables using JOIN
+SELECT c.CompanyName, o.OrderDate FROM Customers AS c
+JOIN Orders AS o ON c.CustomerID = o.CustomerID 
+WHERE c.CompanyName = 'QUICK-Stop' LIMIT 5; 
+CompanyName  OrderDate
+-----------  ----------
+QUICK-Stop   1996-08-05
+QUICK-Stop   1996-08-20
+QUICK-Stop   1996-08-21
+QUICK-Stop   1996-09-24
+QUICK-Stop   1996-11-04
+
+-- Attempting to modify data. Adding a row by using INSERT
+INSERT INTO Customers (CustomerID, ContactName, CompanyName, Country)
+VALUES ('ALICE','Alice Johnson', 'Wonderful Widgets', 'USA');
+Error near line 20: UNIQUE constraint failed: Customers.CustomerID
+
+-- using the SELECT statement to retrieve the new record that was added earlier. 
+SELECT * FROM Customers WHERE CustomerID = 'ALICE';
+CustomerID     CompanyName      ContactName   ContactTitle  Address  City  Region  PostalCode  Country  Phone  Fax
+----------  -----------------  -------------  ------------  -------  ----  ------  ----------  -------  -----  ---
+ALICE       Wonderful Widgets  Alice Johnson                                                   USA
+
+-- Changing a row using thr UPDATE statement 
+UPDATE Customers SET ContactName = 'Maria Anders'
+WHERE CustomerID = 'ALFKI';
+
+-- using the SELECT statement to check to see if it is okay. 
+SELECT CustomerID, ContactName FROM Customers WHERE CustomerID = 'ALFKI';
+CustomerID  ContactName
+----------  ------------
+ALFKI       Maria Anders
+
+-- creating a DELETE statement. 
+INSERT INTO Customers (CustomerID, ContactName, CompanyName, Country)
+VALUES ('TEMP1', 'Tom Temp', 'Temporary Traders', 'USA');
+
+SELECT * FROM Customers WHERE CustomerID = 'TEMP1';
+CustomerID     CompanyName     ContactName  ContactTitle  Address  City  Region  PostalCode  Country  Phone  Fax
+----------  -----------------  -----------  ------------  -------  ----  ------  ----------  -------  -----  ---
+TEMP1       Temporary Traders  Tom Temp                                                      USA
+-- WHERE is important because otherwise you'll delete the whole table. 
+DELETE FROM Customers WHERE CustomerID = 'TEMP1';
+
+SELECT * FROM Customers WHERE CustomerID = 'TEMP1';
