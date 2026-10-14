@@ -23,7 +23,7 @@ VALUES ('ALICE','Alice Johnson', 'Wonderful Widgets', 'USA');
 -- using the SELECT statement to retrieve the new record that was added earlier. 
 SELECT * FROM Customers WHERE CustomerID = 'ALICE';
 
--- Changing a row using thr UPDATE statement 
+-- Changing a row using the UPDATE statement 
 UPDATE Customers SET ContactName = 'Maria Anders'
 WHERE CustomerID = 'ALFKI';
 
